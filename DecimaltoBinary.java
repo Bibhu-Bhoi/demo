@@ -1,29 +1,37 @@
 import java.util.Scanner;
-public class DecimaltoBinary {
 
+public class DecimalToBinary {
     public static void main(String[] args) {
-        StringBuilder onesComplement = new StringBuilder();
         Scanner sc = new Scanner(System.in);
+        System.out.print("Enter a decimal number: ");
         int n = sc.nextInt();
-        String binary=" ";
-        while(n>0){
-            int bit=n%2;
-                binary = bit + binary;
-            n/=2;
+        sc.close();
+        
+        // Convert decimal to binary
+        String binary = Integer.toBinaryString(n);
+        System.out.println("Binary: " + binary);
+        
+        // Calculate 1's complement
+        StringBuilder onesComplement = new StringBuilder();
+        for (char bit : binary.toCharArray()) {
+            onesComplement.append(bit == '0' ? '1' : '0');
         }
-        return binary;
-        System.out.println(result);
-        for(int i=0;i<result.length();i++){
-            char bit = result.charAt(i);
-            if(bit == '0'){
-                onesComplement.append('1');
-
-            }
-            else{
-                onesComplement.append('0');
+        System.out.println("1's Complement: " + onesComplement);
+        
+        // Calculate 2's complement
+        StringBuilder twosComplement = new StringBuilder(onesComplement);
+        boolean carry = true;
+        for (int i = twosComplement.length() - 1; i >= 0; i--) {
+            if (carry) {
+                if (twosComplement.charAt(i) == '1') {
+                    twosComplement.setCharAt(i, '0');
+                } else {
+                    twosComplement.setCharAt(i, '1');
+                    carry = false;
+                }
             }
         }
-        System.out.println(result);
+        
+        System.out.println("2's Complement: " + twosComplement);
     }
 }
-    
